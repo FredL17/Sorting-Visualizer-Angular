@@ -6,17 +6,25 @@ import { AppComponent } from './app.component';
 import { VisualizerComponent } from './visualizer/visualizer.component';
 import { HeaderComponent } from './header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { NumberBarComponent } from './visualizer/number-bar/number-bar.component';
+import { MatSelectModule } from '@angular/material/select'; 
 
 @NgModule({
   declarations: [
     AppComponent,
     VisualizerComponent,
-    HeaderComponent
+    HeaderComponent,
+    NumberBarComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatCardModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

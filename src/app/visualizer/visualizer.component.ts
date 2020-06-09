@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList } from '@angular/core';
+import { SortingService } from '../services/sorting.service';
+import { NumberBarComponent } from './number-bar/number-bar.component';
 
 @Component({
   selector: 'app-visualizer',
@@ -7,9 +9,60 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VisualizerComponent implements OnInit {
 
-  constructor() { }
+  // Get the NumberBarComponents from the DOM.
+  @ViewChildren(NumberBarComponent) numberBars: QueryList<NumberBarComponent>;
 
+  arrayToSort: number[] = [];
+  selected: string = "mergeSort";
+  primaryColor: string = "#a8df65";
+  secondColor: string = "#e84a5f";
+
+  constructor(private sortingService: SortingService) { }
+
+  // Create an array with length 100.
+  // Values in the array are ranged between 1 and 100.
   ngOnInit(): void {
+    for(let i = 0; i < 100; i++) {
+      this.arrayToSort.push(this.randomIntFromInterval(1, 100));
+    }
+  }
+
+  // Generate a random integer between min and max (endpoints included).
+  randomIntFromInterval(min: number, max: number): number {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+
+  // Reset the array with new values.
+  resetArray(): void {
+    this.arrayToSort = [];
+    for(let i = 0; i < 100; i++) {
+      this.arrayToSort.push(this.randomIntFromInterval(1, 100));
+    }
+  }
+
+  // Perform merge sort animation.
+  onMergeSort(): void {
+    const animations = this.sortingService.mergeSort(this.arrayToSort.slice());
+    for(let i = 0; i < animations.length; i++) {
+      // Obtain the number bars in the DOM as an array.
+      const numBars = this.numberBars.toArray();
+      const isColorChange = i % 3 !== 2;
+      // Perform color change animation.
+      if(isColorChange) {
+        const[barOneIndex, barTwoIndex] = animations[i];
+        const color = i % 3 === 0 ? this.secondColor : this.primaryColor;
+        setTimeout(() => {
+          numBars[barOneIndex].color = color;
+          numBars[barTwoIndex].color = color;
+        }, i);
+      } else {
+        // Change the height of the targeted number bar.
+        setTimeout(() => {
+          const[barOneIndex, newHeight] = animations[i];
+          numBars[barOneIndex].height = newHeight;
+        }, i);
+      }
+    }
   }
 
 }

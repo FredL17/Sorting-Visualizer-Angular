@@ -1,1 +1,32 @@
-<p>visualizer works!</p>
+<div class="row w-100 h-75 mx-auto">
+    <!-- Number bars -->
+    <div class="d-flex w-75 h-75 my-auto justify-content-center">
+        <app-number-bar *ngFor="let i of arrayToSort" [height]="i" [color]="primaryColor"></app-number-bar>
+    </div>
+
+    <!-- Menu -->
+    <div class="d-flex w-25 justify-content-center align-items-center">
+        <mat-card class="w-75 h-75 text-center">
+            <h3>Menu</h3>
+            <mat-card-actions>
+                <mat-form-field class="w-75">
+                    <mat-label>Select a sorting algorithem</mat-label>
+                    <mat-select [(value)]="selected">
+                        <mat-option value="mergeSort">Merge Sort</mat-option>
+                        <mat-option value="quickSort">Quick Sort</mat-option>
+                        <mat-option value="bubbleSort">Bubble Sort</mat-option>
+                        <mat-option value="insertionSort">Insertion Sort</mat-option>
+                        <mat-option value="selectionSort">Selection Sort</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div class="row mx-auto my-1 justify-content-center">
+                    <button mat-raised-button color="accent" (click)="resetArray()">Reset</button>
+                </div>
+                <div class="row mx-auto my-1 justify-content-center">
+                    <button mat-raised-button color="accent" (click)="onMergeSort()">Start</button>
+                </div>
+
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>
