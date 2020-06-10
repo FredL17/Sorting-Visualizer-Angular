@@ -74,6 +74,10 @@ export class VisualizerComponent implements OnInit {
         this.onBubbleSort(array);
         break;
       }
+      case 'selectionSort': {
+        this.onSelectionSort(array);
+        break;
+      }
       default: {
         break;
       }
@@ -115,8 +119,6 @@ export class VisualizerComponent implements OnInit {
     this.swapAnimation();
   }
 
-
-
   // Perform insertion sort animation.
   onInsertionSort(array: number[]): void {
     this.animations = this.sortingService.insertionSort(array);
@@ -129,8 +131,17 @@ export class VisualizerComponent implements OnInit {
     this.swapAnimation();
   }
 
+  // Perform selection sort animation.
+  onSelectionSort(array: number[]): void {
+    this.animations = this.sortingService.selectionSort(array);
+    this.swapAnimation();
+  }
+
   // Perform swap animation.
   swapAnimation(): void {
+    if(this.animations.length === 0) {
+      this.isFinished = true;
+    }
     for (let i = 0; i < this.animations.length; i++) {
       // Obtain the number bars in the DOM as an array.
       const numBars = this.numberBars.toArray();
@@ -156,7 +167,6 @@ export class VisualizerComponent implements OnInit {
         }, i * this.delay);
       }
     }
-    this.isFinished = true;
   }
 
 }

@@ -130,6 +130,16 @@ export class SortingService {
   selectionSort(array: number[]): any[] {
     const animations = [];
     if (array.length <= 1) return animations;
+    for(let i = 0; i < array.length; i++) {
+      let smallestIndex = i;
+      for(let j = i + 1; j < array.length; j++) {
+        if(array[j] < array[smallestIndex]) {
+          smallestIndex = j;
+        }
+      }
+      this.swap(array, i, smallestIndex, animations);
+    }
+    return animations;
   }
 
   // Bubble sort given array and returns an array with animation info.
