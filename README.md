@@ -1,4 +1,4 @@
-# SortingVisualizer
+# Sorting Visualizer
 
 Sorting Visualizer is a web application that allows users to animate different sorting
 algorithms.
