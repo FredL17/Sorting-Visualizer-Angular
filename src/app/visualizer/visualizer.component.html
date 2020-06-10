@@ -1,17 +1,17 @@
-<div class="row w-100 h-75 mx-auto">
+<div class="container-fluid h-100 row mx-auto">
     <!-- Number bars -->
-    <div class="d-flex w-75 h-75 my-auto justify-content-center">
+    <div class="col-lg-8 row h-75 justify-content-center mx-auto my-auto">
         <app-number-bar *ngFor="let i of arrayToSort" [height]="i" [color]="primaryColor"></app-number-bar>
     </div>
 
     <!-- Menu -->
-    <div class="d-flex w-25 justify-content-center align-items-center">
-        <mat-card class="w-75 h-75 text-center">
+    <div class="col-lg-4 h-75 mx-auto my-auto">
+        <mat-card class="w-75 h-100 mx-auto text-center">
             <h3>Menu</h3>
             <mat-card-actions>
                 <mat-form-field class="w-75">
                     <mat-label>Select a sorting algorithem</mat-label>
-                    <mat-select [(value)]="selected">
+                    <mat-select [disabled]="!isFinished" [(value)]="selected">
                         <mat-option value="mergeSort">Merge Sort</mat-option>
                         <mat-option value="quickSort">Quick Sort</mat-option>
                         <mat-option value="bubbleSort">Bubble Sort</mat-option>
@@ -20,14 +20,14 @@
                     </mat-select>
                 </mat-form-field>
                 <div class="row mx-auto my-1 justify-content-center">
-                    <span>Delay <mat-slider min='1' max="100" value="1" (change)="onChangeDelay($event)"></mat-slider>
+                    <span>Delay <mat-slider min='1' max="100" value="1" [disabled]="!isFinished" (change)="onChangeDelay($event)"></mat-slider>
                     </span>
                 </div>
                 <div class="row mx-auto my-1 justify-content-center">
-                    <button mat-raised-button color="accent" [disabled]="!isFinished" (click)="resetArray()">Reset</button>
+                    <button class="w-75 h-50" mat-raised-button color="accent" [disabled]="!isFinished" (click)="resetArray()">Reset</button>
                 </div>
                 <div class="row mx-auto my-1 justify-content-center">
-                    <button mat-raised-button color="accent" [disabled]="!isFinished" (click)="onStart()">Start</button>
+                    <button class="w-75 h-50" mat-raised-button color="accent" [disabled]="!isFinished" (click)="onStart()">Start</button>
                 </div>
             </mat-card-actions>
         </mat-card>
