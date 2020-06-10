@@ -74,7 +74,42 @@ export class SortingService {
   // Quick sort given array and returns an array with animation info.
   quickSort(array: number[]): any[] {
     const animations = [];
-    if(array.length <= 1) return animations;
+    this.quickSortHelper(array, 0, array.length - 1, animations);
+    return animations;
+  }
+
+  // Quick sort helper.
+  private quickSortHelper(array: number[], startIndex: number, endIndex: number, animations: any[]): void {
+    if (startIndex >= endIndex) return;
+    const pivotIndex = startIndex;
+    let leftIndex = startIndex + 1;
+    let rightIndex = endIndex;
+
+    while (leftIndex <= rightIndex) {
+      if (array[leftIndex] > array[pivotIndex] && array[rightIndex] < array[pivotIndex]) {
+        this.swap(array, leftIndex, rightIndex, animations);
+      }
+      if (array[leftIndex] <= array[pivotIndex]) leftIndex++;
+      if (array[rightIndex] >= array[pivotIndex]) rightIndex--;
+    }
+    this.swap(array, pivotIndex, rightIndex, animations);
+    this.quickSortHelper(array, startIndex, rightIndex - 1, animations);
+    this.quickSortHelper(array, rightIndex + 1, endIndex, animations);
+
+  }
+
+  private swap(array: number[], i: number, j: number, animations: any[]): void {
+    // We're about to swaping the values at index i and j.
+    // Push once for changing colors.
+    animations.push([i, j]);
+    let temp = array[i];
+    // Here we're swaping values at index i and j in the original array
+    // Push these values for changing height.
+    animations.push([i, array[j], j, array[i]]);
+    array[i] = array[j];
+    array[j] = temp;
+    // Push i and j for a second time for changing the colors back.
+    animations.push([i, j]);
   }
 
 
@@ -82,19 +117,19 @@ export class SortingService {
   // Insertion sort given array and returns an array with animation info.
   insertionSort(array: number[]): any[] {
     const animations = [];
-    if(array.length <= 1) return animations;
+    if (array.length <= 1) return animations;
   }
 
   // Selection sort given array and returns an array with animation info.
   selectionSort(array: number[]): any[] {
     const animations = [];
-    if(array.length <= 1) return animations;
+    if (array.length <= 1) return animations;
   }
 
   // Bubble sort given array and returns an array with animation info.
   bubbleSort(array: number[]): any[] {
     const animations = [];
-    if(array.length <= 1) return animations;
+    if (array.length <= 1) return animations;
   }
 
 }

@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { NumberBarComponent } from './visualizer/number-bar/number-bar.component';
 import { MatSelectModule } from '@angular/material/select'; 
+import { MatSliderModule } from '@angular/material/slider';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { MatSelectModule } from '@angular/material/select';
     BrowserAnimationsModule,
     MatButtonModule,
     MatCardModule,
-    MatSelectModule
+    MatSelectModule,
+    MatSliderModule
   ],
   providers: [],
   bootstrap: [AppComponent]

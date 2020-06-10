@@ -20,12 +20,15 @@
                     </mat-select>
                 </mat-form-field>
                 <div class="row mx-auto my-1 justify-content-center">
-                    <button mat-raised-button color="accent" (click)="resetArray()">Reset</button>
+                    <span>Delay <mat-slider min='1' max="100" value="1" (change)="onChangeDelay($event)"></mat-slider>
+                    </span>
                 </div>
                 <div class="row mx-auto my-1 justify-content-center">
-                    <button mat-raised-button color="accent" (click)="onMergeSort()">Start</button>
+                    <button mat-raised-button color="accent" [disabled]="!isFinished" (click)="resetArray()">Reset</button>
                 </div>
-
+                <div class="row mx-auto my-1 justify-content-center">
+                    <button mat-raised-button color="accent" [disabled]="!isFinished" (click)="onStart()">Start</button>
+                </div>
             </mat-card-actions>
         </mat-card>
     </div>

@@ -3,9 +3,9 @@
 Sorting Visualizer is a web application that allows users to animate different sorting
 algorithms.
 
-So far, the application supports the following algorithms:
+The application supports the following algorithms:
 1. Merge sort
-2. Quick sort (coming soon)
+2. Quick sort
 3. Bubble sort (coming soon)
 4. Insertion sort (coming soon)
 5. Selection sort (coming soon)

@@ -13,16 +13,19 @@ export class VisualizerComponent implements OnInit {
   @ViewChildren(NumberBarComponent) numberBars: QueryList<NumberBarComponent>;
 
   arrayToSort: number[] = [];
+  animations: any[];
   selected: string = "mergeSort";
   primaryColor: string = "#a8df65";
   secondColor: string = "#e84a5f";
+  delay: number = 1;
+  isFinished: boolean = true;
 
   constructor(private sortingService: SortingService) { }
 
   // Create an array with length 100.
   // Values in the array are ranged between 1 and 100.
   ngOnInit(): void {
-    for(let i = 0; i < 100; i++) {
+    for (let i = 0; i < 100; i++) {
       this.arrayToSort.push(this.randomIntFromInterval(1, 100));
     }
   }
@@ -35,32 +38,95 @@ export class VisualizerComponent implements OnInit {
   // Reset the array with new values.
   resetArray(): void {
     this.arrayToSort = [];
-    for(let i = 0; i < 100; i++) {
+    for (let i = 0; i < 100; i++) {
       this.arrayToSort.push(this.randomIntFromInterval(1, 100));
     }
   }
 
+  onChangeDelay(event: any): void {
+    this.delay = event.value;
+  }
+
+  onStart(): void {
+    // Disable the reset and start buttons when sorting is not finished.
+    this.isFinished = false;
+    const numBars = this.numberBars.toArray();
+    const array = [];
+    for(let i = 0; i < numBars.length; i++) {
+      array.push(numBars[i].height);
+    }
+    this.animations = [];
+    switch (this.selected) {
+      case 'mergeSort': {
+        this.onMergeSort(array);
+        break;
+      }
+      case 'quickSort': {
+        this.onQuickSort(array);
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+  }
+
   // Perform merge sort animation.
-  onMergeSort(): void {
-    const animations = this.sortingService.mergeSort(this.arrayToSort.slice());
-    for(let i = 0; i < animations.length; i++) {
+  onMergeSort(array: number[]): void {
+    this.animations = this.sortingService.mergeSort(array);
+    for (let i = 0; i < this.animations.length; i++) {
       // Obtain the number bars in the DOM as an array.
       const numBars = this.numberBars.toArray();
       const isColorChange = i % 3 !== 2;
       // Perform color change animation.
-      if(isColorChange) {
-        const[barOneIndex, barTwoIndex] = animations[i];
+      if (isColorChange) {
+        const [barOneIndex, barTwoIndex] = this.animations[i];
         const color = i % 3 === 0 ? this.secondColor : this.primaryColor;
         setTimeout(() => {
           numBars[barOneIndex].color = color;
           numBars[barTwoIndex].color = color;
-        }, i);
+        }, i * this.delay);
       } else {
         // Change the height of the targeted number bar.
         setTimeout(() => {
-          const[barOneIndex, newHeight] = animations[i];
+          const [barOneIndex, newHeight] = this.animations[i];
           numBars[barOneIndex].height = newHeight;
-        }, i);
+          // Enable the reset and start buttons when finished.
+          if(i === this.animations.length - 1) {
+            this.isFinished = true;
+          }
+        }, i * this.delay);
+      }
+    }
+  }
+
+  // Perform quick sort animation.
+  onQuickSort(array: number[]): void {
+    
+    this.animations = this.sortingService.quickSort(array);
+    for (let i = 0; i < this.animations.length; i++) {
+      // Obtain the number bars in the DOM as an array.
+      const numBars = this.numberBars.toArray();
+      const isColorChange = i % 3 !== 1;
+      // Perform color change animation.
+      if (isColorChange) {
+        const [barOneIndex, barTwoIndex] = this.animations[i];
+        const color = i % 3 === 0 ? this.secondColor : this.primaryColor;
+        setTimeout(() => {
+          numBars[barOneIndex].color = color;
+          numBars[barTwoIndex].color = color;
+          // Enable the reset and start buttons when finished.
+          if(i === this.animations.length - 1) {
+            this.isFinished = true;
+          }
+        }, i * this.delay);
+      } else {
+        // Swaping two number bars.
+        setTimeout(() => {
+          const [barOneIndex, newHeightOne, barTwoIndex, newHeightTwo] = this.animations[i];
+          numBars[barOneIndex].height = newHeightOne;
+          numBars[barTwoIndex].height = newHeightTwo;
+        }, i * this.delay);
       }
     }
   }
