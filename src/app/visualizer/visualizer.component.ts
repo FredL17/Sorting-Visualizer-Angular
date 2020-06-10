@@ -52,10 +52,11 @@ export class VisualizerComponent implements OnInit {
     this.isFinished = false;
     const numBars = this.numberBars.toArray();
     const array = [];
-    for(let i = 0; i < numBars.length; i++) {
+    for (let i = 0; i < numBars.length; i++) {
       array.push(numBars[i].height);
     }
     this.animations = [];
+    // Call selected sorting algorithm.
     switch (this.selected) {
       case 'mergeSort': {
         this.onMergeSort(array);
@@ -63,6 +64,14 @@ export class VisualizerComponent implements OnInit {
       }
       case 'quickSort': {
         this.onQuickSort(array);
+        break;
+      }
+      case 'insertionSort': {
+        this.onInsertionSort(array);
+        break;
+      }
+      case 'bubbleSort': {
+        this.onBubbleSort(array);
         break;
       }
       default: {
@@ -92,7 +101,7 @@ export class VisualizerComponent implements OnInit {
           const [barOneIndex, newHeight] = this.animations[i];
           numBars[barOneIndex].height = newHeight;
           // Enable the reset and start buttons when finished.
-          if(i === this.animations.length - 1) {
+          if (i === this.animations.length - 1) {
             this.isFinished = true;
           }
         }, i * this.delay);
@@ -102,8 +111,26 @@ export class VisualizerComponent implements OnInit {
 
   // Perform quick sort animation.
   onQuickSort(array: number[]): void {
-    
     this.animations = this.sortingService.quickSort(array);
+    this.swapAnimation();
+  }
+
+
+
+  // Perform insertion sort animation.
+  onInsertionSort(array: number[]): void {
+    this.animations = this.sortingService.insertionSort(array);
+    this.swapAnimation();
+  }
+
+  // Perform bubble sort animation.
+  onBubbleSort(array: number[]): void {
+    this.animations = this.sortingService.bubbleSort(array);
+    this.swapAnimation();
+  }
+
+  // Perform swap animation.
+  swapAnimation(): void {
     for (let i = 0; i < this.animations.length; i++) {
       // Obtain the number bars in the DOM as an array.
       const numBars = this.numberBars.toArray();
@@ -116,7 +143,7 @@ export class VisualizerComponent implements OnInit {
           numBars[barOneIndex].color = color;
           numBars[barTwoIndex].color = color;
           // Enable the reset and start buttons when finished.
-          if(i === this.animations.length - 1) {
+          if (i === this.animations.length - 1) {
             this.isFinished = true;
           }
         }, i * this.delay);
@@ -129,6 +156,7 @@ export class VisualizerComponent implements OnInit {
         }, i * this.delay);
       }
     }
+    this.isFinished = true;
   }
 
 }

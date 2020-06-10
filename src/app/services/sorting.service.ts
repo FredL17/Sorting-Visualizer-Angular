@@ -118,6 +118,12 @@ export class SortingService {
   insertionSort(array: number[]): any[] {
     const animations = [];
     if (array.length <= 1) return animations;
+    for (let i = 1; i < array.length; i++) {
+      for (let j = i; j - 1 >= 0 && array[j - 1] > array[j]; j--) {
+        this.swap(array, j - 1, j, animations);
+      }
+    }
+    return animations;
   }
 
   // Selection sort given array and returns an array with animation info.
@@ -130,6 +136,19 @@ export class SortingService {
   bubbleSort(array: number[]): any[] {
     const animations = [];
     if (array.length <= 1) return animations;
+    let isSwap = true;
+    while (isSwap) {
+      isSwap = false;
+      for (let i = 0; i < array.length; i++) {
+        let first = array[i];
+        let second = array[i + 1];
+        if (first > second) {
+          this.swap(array, i, i + 1, animations);
+          isSwap = true;
+        }
+      }
+    }
+    return animations;
   }
 
 }
