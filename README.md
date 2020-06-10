@@ -11,6 +11,8 @@ So far, the application supports the following algorithms:
 4. Insertion sort
 5. Selection sort
 
+The Project is now live on [https://feifan17.github.io/Sorting-Visualizer-Angular/][https://feifan17.github.io/Sorting-Visualizer-Angular/]
+
 ## Deploy the app locally
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.4. Make sure you have the latest version of angular-cli installed on your
