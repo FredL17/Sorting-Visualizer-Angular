@@ -11,7 +11,7 @@ So far, the application supports the following algorithms:
 4. Insertion sort
 5. Selection sort
 
-The Project is now live on [https://feifan17.github.io/Sorting-Visualizer-Angular/](https://feifan17.github.io/Sorting-Visualizer-Angular/)
+The Project is now live on [https://fredl17.github.io/Sorting-Visualizer-Angular/](https://fredl17.github.io/Sorting-Visualizer-Angular/)
 
 ## Deploy the app locally
 
